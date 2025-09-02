@@ -1,7 +1,14 @@
-//
-//  Welcome.swift
-//  HaikuThis
-//
-//  Created by Khanh Nguyen on 7/30/25.
-//
+import SwiftUI
+
+struct TabScreen: View {
+
+	 var body: some View {
+			Text("hello world")
+	 }
+}
+
+#Preview {
+	 TabScreen()
+}
+
 

@@ -11,7 +11,19 @@ struct RoomList: View {
 			NavigationStack {
 				 List(model.fetchedRooms) { room in
 						NavigationLink(value: room) {
-							 Text(room.roomName)
+							 VStack(alignment: .leading, spacing: 4) {
+									HStack {
+										 Text(room.roomName)
+												.font(.headline)
+										 Spacer()
+										 Text(room.messageTime)
+												.font(.caption)
+									}
+
+									Text(room.lastMessage)
+										 .font(.subheadline)
+
+							 }
 						}
 				 }
 				 .navigationTitle("Chat Rooms")
@@ -99,9 +111,15 @@ struct InfoBox: View {
 							 return
 						}
 						guard !roomName.isEmpty else { return }
-
+						let formatter = DateFormatter()
+						formatter.dateFormat = "h:mm a"
+						formatter.amSymbol = "AM"
+						formatter.pmSymbol = "PM"
+						let messageTime = formatter.string(from: Date())
+						let lastMessage = "Send a chat message!"
 						let newRoomID = generateRoomID()
-						let newRoom = RoomStruct(roomID: newRoomID, roomName: roomName)
+
+						let newRoom = RoomStruct(roomID: newRoomID, roomName: roomName, lastMessage: lastMessage, messageTime: messageTime)
 						model.createRoom(roomName: roomName, roomID: newRoomID, userID: userID)
 
 						withAnimation(.easeInOut(duration: 1)) {

@@ -7,6 +7,12 @@ class RoomListModel {
 	 var joinRoom: Bool = false
 
 	 func createRoom(roomName: String, roomID: String, userID: String) {
+			let formatter = DateFormatter()
+			formatter.dateFormat = "h:mm a"
+			formatter.amSymbol = "AM"
+			formatter.pmSymbol = "PM"
+			let messageTime = formatter.string(from: Date())
+			let lastMessage = "Send a chat message!"
 
 			guard let url = URL(string: "https://fvw2w2pmw7.execute-api.us-east-2.amazonaws.com/Haiku-CreateRoom-Post") else {
 				 print("Invalid URL")
@@ -16,7 +22,9 @@ class RoomListModel {
 			let payload: [String: Any] = [
 				 "roomID": roomID,
 				 "roomName": roomName,
-				 "userID": userID
+				 "userID": userID,
+				 "lastMessage": lastMessage,
+				 "messageTime": messageTime
 			]
 
 			guard let jsonData = try? JSONSerialization.data(withJSONObject: payload) else {
@@ -155,6 +163,8 @@ class RoomListModel {
 struct RoomStruct: Codable, Identifiable, Hashable {
 	 let roomID: String
 	 let roomName: String
+	 let lastMessage: String
+	 let messageTime: String
 
 	 var id: String { roomID }
 }
